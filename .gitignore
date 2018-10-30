@@ -1,0 +1,11 @@
+.DS_Store
+
+.pylintrc
+.python-version
+__pycache__
+
+build/
+files/
+testClean.sh
+testInst.1.sh
+testInst.sh
