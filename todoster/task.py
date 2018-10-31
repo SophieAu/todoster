@@ -1,6 +1,6 @@
 import sys
 
-from todoster.file_operations import save_task, load_project_by_shortcode, load_task, remove_task
+from todoster.file_operations import save_task, load_project_by_shortcode, load_task, remove_task, load_project
 from todoster.output_formatter import format_task, format_string
 from todoster.date_handler import is_valid_date_format, is_valid_week_format, get_week_from_date, format_date, format_week
 
@@ -39,6 +39,9 @@ def edit_task(args):
     for key, value in task_changes.items():
         if not value is None:
             task[key] = value
+
+    if isinstance(task["project"], int):
+        task["project"] = load_project(task["project"])
 
     save_task(task)
     print("You've changed task " + str(args.task_id) + " to the following:")
