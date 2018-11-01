@@ -59,6 +59,7 @@ def edit_task_parser(subparsers):
                         help="assign project shortcode to task",
                         metavar="PROJ")
     parser.add_argument("-i", "--important",
+                        action='store_true',
                         dest="highPriority",
                         help="mark the task as high priority")
     parser.set_defaults(func=edit_task)
