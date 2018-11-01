@@ -1,7 +1,6 @@
 import unittest
-import unittest.mock
 
-from  todoster import output_formatter
+from todoster import output_formatter
 
 class Testformat(unittest.TestCase):
     bold = "\033[1m"
@@ -89,8 +88,6 @@ class Testformat(unittest.TestCase):
         expected = "\"work\" (" + self.color_red + "#work" + self.reset + ")"
 
         self.assertEqual(output_formatter.format_project(mock_proj), expected)
-
-        # def format_project(project)
 
 
     def test_format_task_block(self):

@@ -1,9 +1,9 @@
 import unittest
-import unittest.mock
-
+from unittest.mock import patch
 import io
-from  todoster import output_formatter
-from  todoster import list_projects
+
+from todoster import output_formatter
+from todoster import list_projects
 
 class MockArgs:  #pylint: disable=R0903
     show_all_projects = True
@@ -17,8 +17,8 @@ class TestListProjects(unittest.TestCase):
     def tearDown(self):
         pass
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.list_projects.load_projects')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.list_projects.load_projects')
     def test_list_projects(self, loader_mock, mock_out):
         loader_mock.return_value = [{
                     "id": 1,

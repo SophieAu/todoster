@@ -1,9 +1,9 @@
 import unittest
-import unittest.mock
-
+from unittest.mock import patch
 import io
-from  todoster import output_formatter
-from  todoster import project
+
+from todoster import output_formatter
+from todoster import project
 
 class MockArgs:  #pylint: disable=R0903
     id = 0
@@ -28,8 +28,8 @@ class TestProjects(unittest.TestCase):
         pass
 
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.project.save_project')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.project.save_project')
     def test_add_project(self, saver_mock, mock_out):
         saver_mock.return_value = None
 
@@ -41,9 +41,9 @@ class TestProjects(unittest.TestCase):
         self.assertEqual(mock_out.getvalue(), expected_print)
 
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('sys.stderr', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.project.save_project')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('sys.stderr', new_callable=io.StringIO)
+    @patch('todoster.project.save_project')
     def test_add_project_with_invalid_color(self, saver_mock, mock_err, mock_out):
         saver_mock.return_value = None
 
@@ -59,8 +59,8 @@ class TestProjects(unittest.TestCase):
         self.assertEqual(mock_out.getvalue(), expected_print)
 
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.project.save_project')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.project.save_project')
     def test_add_project_without_shortcode_specified(self, saver_mock, mock_out):
         saver_mock.return_value = None
 
@@ -71,9 +71,9 @@ class TestProjects(unittest.TestCase):
         self.assertEqual(mock_out.getvalue(), expected_print)
 
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.project.save_project')
-    @unittest.mock.patch('todoster.project.load_project_by_shortcode')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.project.save_project')
+    @patch('todoster.project.load_project_by_shortcode')
     def test_edit_project(self, loader_mock, saver_mock, mock_out):
         saver_mock.return_value = None
         loader_mock.return_value = {
@@ -95,9 +95,9 @@ class TestProjects(unittest.TestCase):
         mock_out.truncate(0)
         mock_out.seek(0)
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.project.save_project')
-    @unittest.mock.patch('todoster.project.load_project_by_shortcode')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.project.save_project')
+    @patch('todoster.project.load_project_by_shortcode')
     def test_archive_project(self, loader_mock, saver_mock, mock_out):
         saver_mock.return_value = None
         loader_mock.return_value = {
@@ -115,9 +115,9 @@ class TestProjects(unittest.TestCase):
         mock_out.truncate(0)
         mock_out.seek(0)
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.project.save_project')
-    @unittest.mock.patch('todoster.project.load_project_by_shortcode')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.project.save_project')
+    @patch('todoster.project.load_project_by_shortcode')
     def test_activate_project(self, loader_mock, saver_mock, mock_out):
         saver_mock.return_value = None
         loader_mock.return_value = {
@@ -135,12 +135,13 @@ class TestProjects(unittest.TestCase):
         mock_out.truncate(0)
         mock_out.seek(0)
 
-    @unittest.mock.patch('builtins.input', side_effect=['y'])
-    @unittest.mock.patch('todoster.project.remove_project')
-    @unittest.mock.patch('todoster.project.remove_task')
-    @unittest.mock.patch('todoster.project.load_tasks')
-    @unittest.mock.patch('todoster.project.load_project_by_shortcode')
-    def test_delete_project_say_yes(self, loader_mock, task_mock, dt_mock, dp_mock, mock_in):
+    @patch('builtins.input', side_effect=['y'])
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.project.remove_project')
+    @patch('todoster.project.remove_task')
+    @patch('todoster.project.load_tasks')
+    @patch('todoster.project.load_project_by_shortcode')
+    def test_delete_project_say_yes(self, loader_mock, task_mock, dt_mock, dp_mock, _mock_out, _mock_in):
         loader_mock.return_value = {
                     "id": 1,
                     "title": "active",
@@ -171,12 +172,13 @@ class TestProjects(unittest.TestCase):
         self.assertEqual(dp_mock.call_count, 1)
 
 
-    @unittest.mock.patch('builtins.input', side_effect=['n'])
-    @unittest.mock.patch('todoster.project.remove_project')
-    @unittest.mock.patch('todoster.project.remove_task')
-    @unittest.mock.patch('todoster.project.load_tasks')
-    @unittest.mock.patch('todoster.project.load_project_by_shortcode')
-    def test_delete_project_say_np(self, loader_mock, task_mock, dt_mock, dp_mock, mock_in):
+    @patch('builtins.input', side_effect=['n'])
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.project.remove_project')
+    @patch('todoster.project.remove_task')
+    @patch('todoster.project.load_tasks')
+    @patch('todoster.project.load_project_by_shortcode')
+    def test_delete_project_say_no(self, loader_mock, task_mock, dt_mock, dp_mock, _mock_out, _mock_in):
         loader_mock.return_value = {
                     "id": 1,
                     "title": "active",

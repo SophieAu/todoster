@@ -1,10 +1,10 @@
 import unittest
-import unittest.mock
+from unittest.mock import patch
 import datetime
-from isoweek import Week
 from freezegun import freeze_time
+from isoweek import Week
 
-from  todoster import date_handler
+from todoster import date_handler
 
 class TestDatetimeHandler(unittest.TestCase):
 
@@ -83,7 +83,7 @@ class TestDatetimeHandler(unittest.TestCase):
 
         # pass
 
-    @unittest.mock.patch('isoweek.Week.thisweek')
+    @patch('isoweek.Week.thisweek')
     def test_is_past_week(self, isoweek_mock):
         isoweek_mock.return_value = Week.fromstring("2018W18")
         empty_week = ''
@@ -122,7 +122,7 @@ class TestDatetimeHandler(unittest.TestCase):
         self.assertFalse(date_handler.is_valid_week_format(random_string))
         self.assertFalse(date_handler.is_valid_week_format(no_week_signifier))
 
-    @unittest.mock.patch('isoweek.Week.thisweek')
+    @patch('isoweek.Week.thisweek')
     def test_format_week(self, isoweek_mock):
         isoweek_mock.return_value = Week.fromstring("2018W18")
 

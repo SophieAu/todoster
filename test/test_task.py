@@ -1,10 +1,9 @@
 import unittest
-import unittest.mock
-
+from unittest.mock import patch
 import io
 
-from  todoster import output_formatter
-from  todoster import task
+from todoster import output_formatter
+from todoster import task
 
 class MockArgs:  #pylint: disable=R0903
     task_id = ""
@@ -48,8 +47,8 @@ class TestTask(unittest.TestCase):
         pass
 
 
-    @unittest.mock.patch('sys.stderr', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.task.save_task')
+    @patch('sys.stderr', new_callable=io.StringIO)
+    @patch('todoster.task.save_task')
     def test_add_task_with_empty_title(self, saver_mock, mock_err):
         expected = "You cannot create an empty task.\n"
 
@@ -58,8 +57,8 @@ class TestTask(unittest.TestCase):
         saver_mock.assert_not_called()
 
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.task.save_task')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.task.save_task')
     def test_add_task_with_title(self, saver_mock, mock_out):
         saver_mock.return_value = 3
 
@@ -73,9 +72,9 @@ class TestTask(unittest.TestCase):
         saver_mock.assert_called()
 
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.task.save_task')
-    @unittest.mock.patch('todoster.task.load_task')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.task.save_task')
+    @patch('todoster.task.load_task')
     def test_edit_task_add_new_date(self, loader_mock, saver_mock, mock_out):
         test_task = {
             "id": 1,
@@ -102,9 +101,9 @@ class TestTask(unittest.TestCase):
         saver_mock.assert_called()
 
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.task.save_task')
-    @unittest.mock.patch('todoster.task.load_task')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.task.save_task')
+    @patch('todoster.task.load_task')
     def test_edit_tasks_delete_date(self, loader_mock, saver_mock, mock_out):
         test_task = {
             "id": 1,
@@ -131,9 +130,9 @@ class TestTask(unittest.TestCase):
         saver_mock.assert_called()
 
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.task.save_task')
-    @unittest.mock.patch('todoster.task.load_task')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.task.save_task')
+    @patch('todoster.task.load_task')
     def test_edit_tasks_add_new_week(self, loader_mock, saver_mock, mock_out):
         test_task = {
             "id": 1,
@@ -161,9 +160,9 @@ class TestTask(unittest.TestCase):
         saver_mock.assert_called()
 
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.task.save_task')
-    @unittest.mock.patch('todoster.task.load_task')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.task.save_task')
+    @patch('todoster.task.load_task')
     def test_edit_task_edit_title(self, loader_mock, saver_mock, mock_out):
         test_task = {
             "id": 1,
@@ -191,10 +190,10 @@ class TestTask(unittest.TestCase):
         saver_mock.assert_called()
 
 
-    @unittest.mock.patch('sys.stderr', new_callable=io.StringIO)
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.task.save_task')
-    @unittest.mock.patch('todoster.task.load_task')
+    @patch('sys.stderr', new_callable=io.StringIO)
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.task.save_task')
+    @patch('todoster.task.load_task')
     def test_edit_task_try_to_delete_title(self, loader_mock, saver_mock, mock_out, mock_err):
         test_task = {
             "id": 1,
@@ -220,9 +219,9 @@ class TestTask(unittest.TestCase):
         saver_mock.assert_called()
 
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.task.save_task')
-    @unittest.mock.patch('todoster.task.load_task')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.task.save_task')
+    @patch('todoster.task.load_task')
     def test_edit_task_edit_location(self, loader_mock, saver_mock, mock_out):
         test_task = {
             "id": 1,
@@ -249,9 +248,9 @@ class TestTask(unittest.TestCase):
         self.assertEqual(mock_out.getvalue(), expected)
         saver_mock.assert_called()
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.task.save_task')
-    @unittest.mock.patch('todoster.task.load_task')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.task.save_task')
+    @patch('todoster.task.load_task')
     def test_edit_task_remove_location(self, loader_mock, saver_mock, mock_out):
         test_task = {
             "id": 1,
@@ -278,10 +277,10 @@ class TestTask(unittest.TestCase):
         self.assertEqual(mock_out.getvalue(), expected)
         saver_mock.assert_called()
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.task.save_task')
-    @unittest.mock.patch('todoster.task.load_task')
-    @unittest.mock.patch('todoster.task.load_project_by_shortcode')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.task.save_task')
+    @patch('todoster.task.load_task')
+    @patch('todoster.task.load_project_by_shortcode')
     def test_edit_task_edit_project(self, project_mock, loader_mock, saver_mock, mock_out):
         test_task = {
             "id": 1,
@@ -316,9 +315,10 @@ class TestTask(unittest.TestCase):
         self.assertEqual(mock_out.getvalue(), expected)
         saver_mock.assert_called()
 
-    @unittest.mock.patch('todoster.task.save_task')
-    @unittest.mock.patch('todoster.task.load_task')
-    def test_edit_task_try_to_add_invalid_project(self, loader_mock, saver_mock):
+    @patch('sys.stderr', new_callable=io.StringIO)
+    @patch('todoster.task.save_task')
+    @patch('todoster.task.load_task')
+    def test_edit_task_try_to_add_invalid_project(self, loader_mock, saver_mock, _):
         test_task = {
             "id": 1,
             "title": "design blog section",
@@ -337,9 +337,9 @@ class TestTask(unittest.TestCase):
         with self.assertRaises(SystemExit):
             task.edit_task(self.mock_args)
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.task.save_task')
-    @unittest.mock.patch('todoster.task.load_task')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.task.save_task')
+    @patch('todoster.task.load_task')
     def test_edit_task_remove_project(self, loader_mock, saver_mock, mock_out):
         test_task = {
             "id": 1,
@@ -366,9 +366,9 @@ class TestTask(unittest.TestCase):
         self.assertEqual(mock_out.getvalue(), expected)
         saver_mock.assert_called()
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.task.save_task')
-    @unittest.mock.patch('todoster.task.load_task')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.task.save_task')
+    @patch('todoster.task.load_task')
     def test_edit_task_make_high_prio(self, loader_mock, saver_mock, mock_out):
         test_task = {
             "id": 1,

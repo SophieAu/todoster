@@ -1,11 +1,10 @@
 import unittest
-import unittest.mock
-
+from unittest.mock import patch
 import io
 import copy
 from freezegun import freeze_time
 
-from  todoster import show
+from todoster import show
 
 
 class MockArgs:  #pylint: disable=R0903
@@ -113,9 +112,9 @@ class TestTask(unittest.TestCase):
         pass
 
     @freeze_time("2018-09-02")
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.show.load_projects')
-    @unittest.mock.patch('todoster.show.load_tasks')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.show.load_projects')
+    @patch('todoster.show.load_tasks')
     def test_show_sorted_by_priority(self, mock_tasks, mock_projects, mock_out):
         mock_tasks.return_value = copy.deepcopy(self.test_tasks)
         mock_projects.return_value = copy.deepcopy(self.test_projects)
@@ -134,9 +133,9 @@ class TestTask(unittest.TestCase):
         self.assertEqual(len(normal_prio), 5) # empty line, header, 3 tasks (no done and inactive proj)
 
     @freeze_time("2018-09-02")
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.show.load_projects')
-    @unittest.mock.patch('todoster.show.load_tasks')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.show.load_projects')
+    @patch('todoster.show.load_tasks')
     def test_show_done_tasks(self, mock_tasks, mock_projects, mock_out):
         mock_tasks.return_value = copy.deepcopy(self.test_tasks)
         mock_projects.return_value = copy.deepcopy(self.test_projects)
@@ -152,9 +151,9 @@ class TestTask(unittest.TestCase):
         self.assertNotEqual(printout[1].find('done and future'), -1)
 
     @freeze_time("2018-09-02")
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.show.load_projects')
-    @unittest.mock.patch('todoster.show.load_tasks')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.show.load_projects')
+    @patch('todoster.show.load_tasks')
     def test_show_past_done_tasks(self, mock_tasks, mock_projects, mock_out):
         mock_tasks.return_value = copy.deepcopy(self.test_tasks)
         mock_projects.return_value = copy.deepcopy(self.test_projects)
@@ -171,9 +170,9 @@ class TestTask(unittest.TestCase):
         self.assertNotEqual(printout[1].find('done and past'), -1)
 
     @freeze_time("2018-09-02")
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.show.load_projects')
-    @unittest.mock.patch('todoster.show.load_tasks')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.show.load_projects')
+    @patch('todoster.show.load_tasks')
     def test_show_tasks_from_inactive_projects(self, mock_tasks, mock_projects, mock_out):
         mock_tasks.return_value = copy.deepcopy(self.test_tasks)
         mock_projects.return_value = copy.deepcopy(self.test_projects)
@@ -189,9 +188,9 @@ class TestTask(unittest.TestCase):
         self.assertNotEqual(printout[1].find('inactive project'), -1)
 
     @freeze_time("2018-09-01")
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.show.load_projects')
-    @unittest.mock.patch('todoster.show.load_tasks')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.show.load_projects')
+    @patch('todoster.show.load_tasks')
     def test_show_sorted_by_default(self, mock_tasks, mock_projects, mock_out):
         mock_tasks.return_value = copy.deepcopy(self.test_tasks)
         mock_projects.return_value = copy.deepcopy(self.test_projects)
@@ -232,9 +231,9 @@ class TestTask(unittest.TestCase):
         self.assertNotEqual(next_week[2].find("high prio two, week, no location"), -1)
 
     @freeze_time("2018-09-02")
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.show.load_projects')
-    @unittest.mock.patch('todoster.show.load_tasks')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.show.load_projects')
+    @patch('todoster.show.load_tasks')
     def test_show_sorted_by_default_today_is_sunday(self, mock_tasks, mock_projects, mock_out):
         mock_tasks.return_value = copy.deepcopy(self.test_tasks)
         mock_projects.return_value = copy.deepcopy(self.test_projects)
@@ -249,9 +248,9 @@ class TestTask(unittest.TestCase):
         self.assertNotEqual(printout[3].find("Next Week"), -1)
 
     @freeze_time("2018-09-01")
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.show.load_projects')
-    @unittest.mock.patch('todoster.show.load_tasks')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.show.load_projects')
+    @patch('todoster.show.load_tasks')
     def test_show_sorted_by_location(self, mock_tasks, mock_projects, mock_out):
         mock_tasks.return_value = copy.deepcopy(self.test_tasks)
         mock_projects.return_value = copy.deepcopy(self.test_projects)
@@ -272,9 +271,9 @@ class TestTask(unittest.TestCase):
         self.assertEqual(len(no_location), 6) # empty line, header, 4 tasks
 
     @freeze_time("2018-09-01")
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.show.load_projects')
-    @unittest.mock.patch('todoster.show.load_tasks')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.show.load_projects')
+    @patch('todoster.show.load_tasks')
     def test_show_sorted_by_project(self, mock_tasks, mock_projects, mock_out):
         mock_tasks.return_value = copy.deepcopy(self.test_tasks)
         mock_projects.return_value = copy.deepcopy(self.test_projects)
@@ -299,9 +298,9 @@ class TestTask(unittest.TestCase):
         self.assertEqual(len(no_proj), 6) # empty line, header, 4 tasks
 
     @freeze_time("2018-09-01")
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.show.load_projects')
-    @unittest.mock.patch('todoster.show.load_tasks')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.show.load_projects')
+    @patch('todoster.show.load_tasks')
     def test_show_sorted_by_project_with_inactive_project(self, mock_tasks, mock_projects, mock_out):
         mock_tasks.return_value = copy.deepcopy(self.test_tasks)
         mock_projects.return_value = copy.deepcopy(self.test_projects)
@@ -322,9 +321,9 @@ class TestTask(unittest.TestCase):
 
 
     @freeze_time("2018-09-01")
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.show.load_projects')
-    @unittest.mock.patch('todoster.show.load_tasks')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.show.load_projects')
+    @patch('todoster.show.load_tasks')
     def test_show_only_backlog(self, mock_tasks, mock_projects, mock_out):
         mock_tasks.return_value = copy.deepcopy(self.test_tasks)
         mock_projects.return_value = copy.deepcopy(self.test_projects)
@@ -340,9 +339,9 @@ class TestTask(unittest.TestCase):
 
 
     @freeze_time("2018-09-01")
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.show.load_projects')
-    @unittest.mock.patch('todoster.show.load_tasks')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.show.load_projects')
+    @patch('todoster.show.load_tasks')
     def test_show_sorted_by_due_date(self, mock_tasks, mock_projects, mock_out):
         mock_tasks.return_value = copy.deepcopy(self.test_tasks)
         mock_projects.return_value = copy.deepcopy(self.test_projects)

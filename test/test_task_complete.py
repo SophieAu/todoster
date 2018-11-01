@@ -1,9 +1,8 @@
 import unittest
-import unittest.mock
-
+from unittest.mock import patch
 import io
 
-from  todoster import task
+from todoster import task
 
 class MockArgs:  #pylint: disable=R0903
     task_id = ""
@@ -34,9 +33,9 @@ class TestTask(unittest.TestCase):
         pass
 
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.task.save_task')
-    @unittest.mock.patch('todoster.task.load_task')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.task.save_task')
+    @patch('todoster.task.load_task')
     def test_mark_task_as_completed(self, loader_mock, saver_mock, mock_out):
         test_task = {
             "id": 1,
@@ -61,9 +60,9 @@ class TestTask(unittest.TestCase):
         saver_mock.assert_called()
 
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    @unittest.mock.patch('todoster.task.save_task')
-    @unittest.mock.patch('todoster.task.load_task')
+    @patch('sys.stdout', new_callable=io.StringIO)
+    @patch('todoster.task.save_task')
+    @patch('todoster.task.load_task')
     def test_mark_task_as_not_completed(self, loader_mock, saver_mock, mock_out):
         test_task = {
             "id": 1,
