@@ -208,3 +208,8 @@ So, after leaving early from work because I didn't feel too well I of course did
 2018-10-30
 
 Done! Finished copy pasting the help into the readme, found a bug to fix and did the editing/... thing with a bit of resistance but that's it. I'm done. Now I only need to release tomorrow and that's it for now. There's probably still a few bugs here and there but that's it. On to the next project.
+
+
+2018-11-01
+
+After finding two bugs today and yesterday that had to do with the intrinsic behaviour of argparse I think I'm good for release tomorrow. That commit saying I'm on version 1.0.0 is lying but hey, who cares. Also, I managed to clean up the tests a bit while writing a blog post about mocking stdin, stdout and stderr which was quite nice. I might be able to make the tests even nicer and more thorough but I really can't be bothered. It's a lot of work for not that much gain in my opinion. The tests work and when I don't assume things about argparse they do their job pretty well.
